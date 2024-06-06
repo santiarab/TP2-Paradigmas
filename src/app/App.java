@@ -8,7 +8,7 @@ import criptomoneda.Mercado;
 
 public class App {
 	public static void main(String[] args) {
-		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.in");
+		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
 		for (String string : lineas) {
 			System.out.println("---" + string + "---");
 		}
@@ -19,7 +19,7 @@ public class App {
 		System.out.println("-----------");
 		System.out.println("-----------");
 
-		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.in");
+		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.csv");
 		for (String string : lineasMercado) {
 			System.out.println("---" + string + "---");
 		}
