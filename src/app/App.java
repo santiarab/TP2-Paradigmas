@@ -5,6 +5,7 @@ import java.util.List;
 import archivo.Archivo;
 import criptomoneda.Criptomoneda;
 import criptomoneda.Mercado;
+import menu.Menu;
 
 public class App {
 	public static void main(String[] args) {
@@ -27,6 +28,7 @@ public class App {
 		for (Mercado merca : listaMercado) {
 			System.out.println(merca);
 		}
+		Menu.menuOpciones();
 	}
 
 }
