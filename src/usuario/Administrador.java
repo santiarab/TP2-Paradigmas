@@ -33,7 +33,6 @@ public class Administrador extends Usuario{
                     scanner.nextLine(); // Limpiar el buffer del scanner
                 }
             } while (numero < 1 || numero > 6);
-
             switch (numero) {
                 case 1:
                     // Funcionalidad
