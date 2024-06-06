@@ -9,6 +9,9 @@ public class Menu {
 
         while (numero != 6) {
             do {
+            	System.out.println();
+            	System.out.println();
+            	System.out.println();
                 System.out.println("Menú de opciones");
                 System.out.println("-----------------------");
                 System.out.println("1) Crear Criptomoneda");
@@ -17,6 +20,7 @@ public class Menu {
                 System.out.println("4) Consultar Criptomoneda");
                 System.out.println("5) Consultar estado actual del mercado");
                 System.out.println("6) Salir");
+                System.out.println("-----------------------");
                 System.out.print("Ingrese su opción (1 - 6): ");
                 try {
                     numero = scanner.nextInt();
@@ -56,5 +60,8 @@ public class Menu {
             }
         }
         scanner.close(); // Cerrar Scanner al salir del bucle
+        System.out.println();
+    	System.out.println();
+    	System.out.println();
 	}
 }
