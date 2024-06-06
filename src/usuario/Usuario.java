@@ -3,10 +3,20 @@ package usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import archivo.Archivo;
+import criptomoneda.Criptomoneda;
+import criptomoneda.Mercado;
+
 public class Usuario {
 	protected String nombre;
+	protected static List<Criptomoneda> listaCripto;
+	protected static List<Mercado> listaMercado;
 	public Usuario(String nombre) {
 		this.nombre = nombre;
+		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
+		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.csv");
+		this.listaCripto = Criptomoneda.trozearString(lineas);
+		this.listaMercado = Mercado.trozearString(lineasMercado);
 	}
 	public static Usuario trozearString(String str) {
 		String[] partes = str.split(",");

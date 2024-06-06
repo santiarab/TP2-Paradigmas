@@ -12,7 +12,10 @@ public class Administrador extends Usuario{
 	public Administrador(String nombre, String perfil) {
 		super(nombre);
 		this.perfil = perfil;
-		// TODO Auto-generated constructor stub
+		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
+		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.csv");
+		List<Criptomoneda> listaCripto = Criptomoneda.trozearString(lineas);
+		List<Mercado> listaMercado = Mercado.trozearString(lineasMercado);
 	}
 	public static void menu() {
         Scanner scanner = new Scanner(System.in);
@@ -75,6 +78,7 @@ public class Administrador extends Usuario{
         
     }
 	private static void mostrarEstadoActualMercado() {
+		// Posible Mejora seria ir recorriendo ambos archivos sin la necesidad de abrirlos y guardarlo en una lista
 		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
 		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.csv");
 		List<Criptomoneda> listaCripto = Criptomoneda.trozearString(lineas);
