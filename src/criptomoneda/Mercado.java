@@ -4,6 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mercado {
+	public String getSimbolo() {
+		return simbolo;
+	}
+	public void setSimbolo(String simbolo) {
+		this.simbolo = simbolo;
+	}
+	public String getVolumen24Hs() {
+		return volumen24Hs;
+	}
+	public void setVolumen24Hs(String volumen24Hs) {
+		this.volumen24Hs = volumen24Hs;
+	}
+	public String getVar7dias() {
+		return var7dias;
+	}
+	public void setVar7dias(String var7dias) {
+		this.var7dias = var7dias;
+	}
+	public float getCapacidad() {
+		return capacidad;
+	}
+	public void setCapacidad(float capacidad) {
+		this.capacidad = capacidad;
+	}
 	private String simbolo, volumen24Hs, var7dias;
 	private float capacidad;
 	public Mercado(String simbolo, float capacidad, String volumen24Hs, String var7dias) {
@@ -29,5 +53,11 @@ public class Mercado {
 		return "Mercado [simbolo=" + simbolo + ", capacidad=" + capacidad + ", volumen24Hs=" + volumen24Hs
 				+ ", var7dias=" + var7dias + "]";
 	}
-	
+	public static Mercado find(List<Mercado> ls, String simbol) {
+		for(Mercado mer : ls) {
+			if(mer.simbolo.equalsIgnoreCase(simbol))
+				return mer;
+		}
+		return null;
+	}
 }

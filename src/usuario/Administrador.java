@@ -1,6 +1,11 @@
 package usuario;
 
+import java.util.List;
 import java.util.Scanner;
+
+import archivo.Archivo;
+import criptomoneda.Criptomoneda;
+import criptomoneda.Mercado;
 
 public class Administrador extends Usuario{
 	private String perfil;
@@ -12,7 +17,11 @@ public class Administrador extends Usuario{
 	public static void menu() {
         Scanner scanner = new Scanner(System.in);
         int numero = 0;
+        
         while (numero != 6) {
+        	System.out.println();
+            System.out.println();
+            System.out.println();
             do {
                 System.out.println("Menú de opciones");
                 System.out.println("-----------------------");
@@ -51,7 +60,10 @@ public class Administrador extends Usuario{
                     System.out.println("Seleccionaste: Consultar Criptomoneda");
                     break;
                 case 5:
-                    // Funcionalidad
+                	System.out.println();
+                    System.out.println();
+                    System.out.println();
+                    mostrarEstadoActualMercado();
                     System.out.println("Seleccionaste: Consultar estado actual del mercado");
                     break;
                 default:
@@ -60,5 +72,32 @@ public class Administrador extends Usuario{
             }
         }
         scanner.close(); // Cerrar Scanner al salir del bucle
+        
     }
+	private static void mostrarEstadoActualMercado() {
+		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
+		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.csv");
+		List<Criptomoneda> listaCripto = Criptomoneda.trozearString(lineas);
+		List<Mercado> listaMercado = Mercado.trozearString(lineasMercado);
+		
+		for(Criptomoneda cripto : listaCripto) {
+			System.out.printf("%-10s %-20s %-10s %-20s %-10s %-20s%n" ,"Nombre: ",cripto.getNombre(),
+					" Símbolo: ",cripto.getSimbolo()," Precio en dólares: ",cripto.getValor());
+			System.out.println("Datos del Mercado:");
+			Mercado mer =  Mercado.find(listaMercado, cripto.getSimbolo());
+			System.out.printf("%-20s %-40s %-30s%n","Capacidad", "volumen en las últimas 24 horas","Variación en los últimos 7 días");
+			if(mer != null)
+				System.out.printf("%-20s %-40s %-30s%n", mer.getCapacidad(), mer.getVolumen24Hs(), mer.getVar7dias());
+			else
+				System.out.printf("%-20s %-40s %-30s%n", null, null,null);
+		}
+		
+		
+	}
 }
+
+
+
+
+
+

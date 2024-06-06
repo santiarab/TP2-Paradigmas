@@ -5,6 +5,29 @@ import java.util.List;
 
 public class Criptomoneda {
 	private String simbolo, nombre;
+	public String getSimbolo() {
+		return simbolo;
+	}
+
+	public void setSimbolo(String simbolo) {
+		this.simbolo = simbolo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public float getValor() {
+		return valor;
+	}
+
+	public void setValor(float valor) {
+		this.valor = valor;
+	}
 	private float valor;
 
 	public Criptomoneda(String nombre, String simbolo, float valor) {
@@ -31,4 +54,5 @@ public class Criptomoneda {
 	public String toString() {
 		return "Criptomoneda [nombre=" + nombre + ", simbolo=" + simbolo + ", valor=" + valor + "]";
 	}
+
 }
