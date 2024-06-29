@@ -37,11 +37,6 @@ public class Criptomoneda {
 		this.valor = valor;
 	}
 
-	public static Criptomoneda trozearString(String str) {
-		String[] partes = str.split(",");
-		return new Criptomoneda(partes[0], partes[1], Float.parseFloat(partes[2]));
-	}
-
 	public static List<Criptomoneda> trozearString(String[] lista) {
 		List<Criptomoneda> listaCripto = new ArrayList<Criptomoneda>();
 		for (String str : lista) {
@@ -52,9 +47,18 @@ public class Criptomoneda {
 		return listaCripto;
 	}
 
+	public static Criptomoneda buscarSimboloEnListaCripto(List<Criptomoneda> listaCripto, String simbolo){
+		for (Criptomoneda cripto : listaCripto){
+			if(cripto.getSimbolo().equalsIgnoreCase(simbolo)){
+				return cripto;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
-		return "Criptomoneda [nombre=" + nombre + ", simbolo=" + simbolo + ", valor=" + valor + "]";
+		return "Nombre: " + nombre + ". Simbolo: " + simbolo + ". Valor: " + valor;
 	}
 
 }

@@ -1,8 +1,9 @@
 package usuario;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+import Validaciones.Validaciones;
 import archivo.Archivo;
 import criptomoneda.Criptomoneda;
 import criptomoneda.Mercado;
@@ -16,42 +17,52 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public static String[] validarUsuario(String nombre){
-		return  Archivo.buscarPorClaveYPosicion("casoDePrueba/usuarios.csv", nombre, 0);
+	public static String[] validarUsuario(String nomUsr) {
+		return Archivo.buscarPorClaveYPosicion("casoDePrueba/usuarios.csv", nomUsr, 0);
 	}
-	
+
+	public static void insertarUsuario(String registro) {
+		Archivo.insertarRegistro("casoDePrueba/usuarios.csv", registro);
+	}
+
 	public static void inicializarListas() {
+		// Manda a leer los dos archivos csv
 		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
 		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.csv");
+		// Inserta el contenido leido en las listas static
 		listaCripto = Criptomoneda.trozearString(lineas);
 		listaMercado = Mercado.trozearString(lineasMercado);
 	}
 
-	protected void consultarCriptomoneda(){
-		//PEDIR CRIPTO
-		//BUSCARLA
+	protected void consultarCriptomoneda(Scanner scanner) {
+		// PEDIR CRIPTO
+		String simbolo;
+		do {
+			System.out.println("Ingrese el símbolo de la criptomoneda que desea consultar: ");
+			simbolo = Validaciones.validarString(scanner);
+		} while (simbolo == null);
+
+		// BUSCARLA
+
+		Criptomoneda cripto = Criptomoneda.buscarSimboloEnListaCripto(listaCripto, simbolo);
+
+		if (cripto != null) {
+			Mercado mer = Mercado.buscarSimboloEnLista(listaMercado, simbolo);
+
+			System.out.println("Información de la criptomoneda consultada\n"+cripto);
+			// No hago print de mer para no mostrar el símbolo de nuevo
+			System.out.println("Datos del mercado:\nCapacidad: " + mer.getCapacidad() + ". Volumen en las últimas 24 horas "
+					+ mer.getVolumen24Hs() + ". Variación en los últimos 7 días " + mer.getVar7dias());
+
+		} else
+			System.out.println("El símbolo de criptomoneda ingresado no existe");
+
 	}
 
 	protected void mostrarEstadoActualMercado() {
-		// Posible Mejora seria ir recorriendo ambos archivos sin la necesidad de
-		// abrirlos y guardarlo en una lista
-		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
-		String[] lineasMercado = Archivo.leerArchivo("casoDePrueba/mercado.csv");
-		List<Criptomoneda> listaCripto = Criptomoneda.trozearString(lineas);
-		List<Mercado> listaMercado = Mercado.trozearString(lineasMercado);
-
-		for (Criptomoneda cripto : listaCripto) {
-			System.out.printf("%-10s %-20s %-10s %-20s %-10s %-20s%n", "Nombre: ", cripto.getNombre(), " Símbolo: ",
-					cripto.getSimbolo(), " Precio en dólares: ", cripto.getValor());
-			System.out.println("Datos del Mercado:");
-			Mercado mer = Mercado.find(listaMercado, cripto.getSimbolo());
-			System.out.printf("%-20s %-40s %-30s%n", "Capacidad", "volumen en las últimas 24 horas",
-					"Variación en los últimos 7 días");
-			if (mer != null)
-				System.out.printf("%-20s %-40s %-30s%n", mer.getCapacidad(), mer.getVolumen24Hs(), mer.getVar7dias());
-			else
-				System.out.printf("%-20s %-40s %-30s%n", null, null, null);
+		System.out.println("Estado actual del mercado:");
+		for (Mercado mer : listaMercado) {
+			System.out.println(mer);
 		}
-
 	}
 }

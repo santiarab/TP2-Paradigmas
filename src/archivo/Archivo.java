@@ -1,12 +1,14 @@
 package archivo;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Archivo {
-	// Constructor
+	// Leer archivo csv y devolver registros
 	public static String[] leerArchivo(String nombre) {
 		ArrayList<String> lineas = new ArrayList<>();
 		try (Scanner scanner = new Scanner(new File(nombre))) {
@@ -38,6 +40,16 @@ public class Archivo {
             e.printStackTrace();
         }
         return null; // Devuelve null si no se encuentra la clave en ninguna línea del archivo
+    }
+
+	// Método para insertar un registro al final de un archivo CSV
+    public static void insertarRegistro(String nombre, String registro) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombre, true))) {
+            writer.newLine(); // Salto de línea para asegurarse de que el nuevo registro comience en una nueva línea
+            writer.write(registro); // Escribe el registro al final del archivo
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 	
 }
