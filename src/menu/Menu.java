@@ -1,29 +1,17 @@
-package usuario;
+package menu;
 
-import java.util.List;
 import java.util.Scanner;
 
-import archivo.Archivo;
-import criptomoneda.Criptomoneda;
-import criptomoneda.Mercado;
-
-public class Administrador extends Usuario {
-	private String perfil;
-
-	public Administrador(String nombre, String perfil) {
-		super(nombre);
-		this.perfil = perfil;
-	}
-
-	public void menu() {
+public class Menu {
+	public static void menuOpciones() {
 		Scanner scanner = new Scanner(System.in);
 		int numero = 0;
 
 		while (numero != 6) {
-			System.out.println();
-			System.out.println();
-			System.out.println();
 			do {
+				System.out.println();
+				System.out.println();
+				System.out.println();
 				System.out.println("Menú de opciones");
 				System.out.println("-----------------------");
 				System.out.println("1) Crear Criptomoneda");
@@ -32,6 +20,7 @@ public class Administrador extends Usuario {
 				System.out.println("4) Consultar Criptomoneda");
 				System.out.println("5) Consultar estado actual del mercado");
 				System.out.println("6) Salir");
+				System.out.println("-----------------------");
 				System.out.print("Ingrese su opción (1 - 6): ");
 				try {
 					numero = scanner.nextInt();
@@ -43,6 +32,7 @@ public class Administrador extends Usuario {
 					scanner.nextLine(); // Limpiar el buffer del scanner
 				}
 			} while (numero < 1 || numero > 6);
+
 			switch (numero) {
 			case 1:
 				// Funcionalidad
@@ -59,13 +49,9 @@ public class Administrador extends Usuario {
 			case 4:
 				// Funcionalidad
 				System.out.println("Seleccionaste: Consultar Criptomoneda");
-				this.consultarCriptomoneda();
 				break;
 			case 5:
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				this.mostrarEstadoActualMercado();
+				// Funcionalidad
 				System.out.println("Seleccionaste: Consultar estado actual del mercado");
 				break;
 			default:
@@ -74,6 +60,8 @@ public class Administrador extends Usuario {
 			}
 		}
 		scanner.close(); // Cerrar Scanner al salir del bucle
-
+		System.out.println();
+		System.out.println();
+		System.out.println();
 	}
 }

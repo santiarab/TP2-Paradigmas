@@ -5,6 +5,14 @@ import java.util.List;
 
 public class Criptomoneda {
 	private String simbolo, nombre;
+	private float valor;
+
+	public Criptomoneda(String nombre, String simbolo, float valor) {
+		this.nombre = nombre;
+		this.simbolo = simbolo;
+		this.valor = valor;
+	}
+
 	public String getSimbolo() {
 		return simbolo;
 	}
@@ -28,13 +36,6 @@ public class Criptomoneda {
 	public void setValor(float valor) {
 		this.valor = valor;
 	}
-	private float valor;
-
-	public Criptomoneda(String nombre, String simbolo, float valor) {
-		this.nombre = nombre;
-		this.simbolo = simbolo;
-		this.valor = valor;
-	}
 
 	public static Criptomoneda trozearString(String str) {
 		String[] partes = str.split(",");
@@ -50,6 +51,7 @@ public class Criptomoneda {
 		}
 		return listaCripto;
 	}
+
 	@Override
 	public String toString() {
 		return "Criptomoneda [nombre=" + nombre + ", simbolo=" + simbolo + ", valor=" + valor + "]";

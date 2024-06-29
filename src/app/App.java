@@ -2,14 +2,11 @@ package app;
 
 import java.util.List;
 
-import archivo.Archivo;
-import criptomoneda.Criptomoneda;
-import criptomoneda.Mercado;
-import menu.Menu;
-import usuario.Administrador;
+import menuPrincipal.menuPrincipal;
 
 public class App {
 	public static void main(String[] args) {
+		menuPrincipal.menuPrincipal();
 //		String[] lineas = Archivo.leerArchivo("casoDePrueba/criptomonedas.csv");
 //		for (String string : lineas) {
 //			System.out.println("---" + string + "---");
@@ -28,7 +25,11 @@ public class App {
 //		for (Mercado merca : listaMercado) {
 //			System.out.println(merca);
 //		}
-		Administrador.menu();
+//		Administrador.menu();
 //		Menu.menuOpciones();
+
+
+
+		
 	}
 }
