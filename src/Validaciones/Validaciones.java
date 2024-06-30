@@ -11,7 +11,6 @@ public class Validaciones {
             scanner.nextLine(); // Limpiar el buffer del scanner
             if (entero < min || entero > max) {
                 System.out.println("Error: Opción fuera de rango.");
-                entero = -1;
             }
         } catch (Exception e) {
             System.out.println("Error: Entrada no válida. Por favor, introduce un número entero.");
@@ -36,7 +35,6 @@ public class Validaciones {
             scanner.nextLine(); // Limpiar el buffer del scanner
             if (num < min || num > max) {
                 System.out.println("Error: Opción fuera de rango.");
-                num = -1;
             }
         } catch (Exception e) {
             System.out.println("Error: Entrada no válida. Por favor, introduce un número.");

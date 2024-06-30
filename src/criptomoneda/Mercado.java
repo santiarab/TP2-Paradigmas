@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mercado {
-	private String simbolo, volumen24Hs, var7dias;
-	private float capacidad;
+	private String simbolo;
+	private double capacidad, volumen24Hs, var7dias;
 
-	public Mercado(String simbolo, float capacidad, String volumen24Hs, String var7dias) {
+	public Mercado(String simbolo, double capacidad, double volumen24Hs, double var7dias) {
 		this.simbolo = simbolo;
 		this.capacidad = capacidad;
-		this.var7dias = var7dias;
 		this.volumen24Hs = volumen24Hs;
+		this.var7dias = var7dias;
 	}
 
 	public String getSimbolo() {
@@ -22,35 +22,48 @@ public class Mercado {
 		this.simbolo = simbolo;
 	}
 
-	public String getVolumen24Hs() {
+	public double getVolumen24Hs() {
 		return volumen24Hs;
 	}
 
-	public void setVolumen24Hs(String volumen24Hs) {
+	public void setVolumen24Hs(double volumen24Hs) {
 		this.volumen24Hs = volumen24Hs;
 	}
 
-	public String getVar7dias() {
+	public double getVar7dias() {
 		return var7dias;
 	}
 
-	public void setVar7dias(String var7dias) {
+	public void setVar7dias(double var7dias) {
 		this.var7dias = var7dias;
 	}
 
-	public float getCapacidad() {
+	public double getCapacidad() {
 		return capacidad;
 	}
 
-	public void setCapacidad(float capacidad) {
+	public void setCapacidad(double capacidad) {
 		this.capacidad = capacidad;
+	}
+
+	public void actualizarPorCompra(double cant){
+		this.capacidad-=cant;
+		this.var7dias+=5;
+		this.volumen24Hs+=5;
+	}
+
+	public void actualizarPorVenta(double cant){
+		this.capacidad+=cant;
+		this.var7dias-=7;
+		this.volumen24Hs-=7;
 	}
 
 	public static List<Mercado> trozearString(String[] lista) {
 		List<Mercado> listaCripto = new ArrayList<Mercado>();
 		for (String str : lista) {
 			String[] partes = str.split(",");
-			listaCripto.add(new Mercado(partes[0], Float.parseFloat(partes[1]), partes[2], partes[3]));
+			listaCripto.add(new Mercado(partes[0], Double.parseDouble(partes[1]), Double.parseDouble(partes[2]),
+					Double.parseDouble(partes[3])));
 		}
 		return listaCripto;
 	}
@@ -62,6 +75,18 @@ public class Mercado {
 			}
 		}
 		return null;
+	}
+
+	public static String[] toStringArray(List<Mercado> listaMercado) {
+		String[] resultado = new String[listaMercado.size()];
+		int i = 0;
+
+		for (Mercado mercado : listaMercado) {
+			resultado[i++] = mercado.getSimbolo() + "," + mercado.getCapacidad() + "," +
+					mercado.getVolumen24Hs() + "," + mercado.getVar7dias();
+		}
+
+		return resultado;
 	}
 
 	@Override

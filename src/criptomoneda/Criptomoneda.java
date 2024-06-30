@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Criptomoneda {
 	private String simbolo, nombre;
-	private float valor;
+	private double valor;
 
-	public Criptomoneda(String nombre, String simbolo, float valor) {
+	public Criptomoneda(String nombre, String simbolo, double valor) {
 		this.nombre = nombre;
 		this.simbolo = simbolo;
 		this.valor = valor;
@@ -29,11 +29,11 @@ public class Criptomoneda {
 		this.nombre = nombre;
 	}
 
-	public float getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(float valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
@@ -42,12 +42,12 @@ public class Criptomoneda {
 		for (String str : lista) {
 			String[] partes = str.split(",");
 
-			listaCripto.add(new Criptomoneda(partes[0], partes[1], Float.parseFloat(partes[2])));
+			listaCripto.add(new Criptomoneda(partes[0], partes[1], Double.parseDouble(partes[2])));
 		}
 		return listaCripto;
 	}
 
-	public static Criptomoneda buscarSimboloEnListaCripto(List<Criptomoneda> listaCripto, String simbolo){
+	public static Criptomoneda buscarSimboloEnLista(List<Criptomoneda> listaCripto, String simbolo){
 		for (Criptomoneda cripto : listaCripto){
 			if(cripto.getSimbolo().equalsIgnoreCase(simbolo)){
 				return cripto;
@@ -55,6 +55,18 @@ public class Criptomoneda {
 		}
 		return null;
 	}
+
+	public static String[] toStringArray(List<Criptomoneda> listaCripto) {
+        String[] resultado = new String[listaCripto.size()];
+        int i = 0;
+
+        for (Criptomoneda cripto : listaCripto) {
+            resultado[i++] = cripto.getNombre() + "," + cripto.getSimbolo() + "," +
+                             cripto.getValor();
+        }
+
+        return resultado;
+    }
 
 	@Override
 	public String toString() {

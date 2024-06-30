@@ -1,29 +1,39 @@
 package archivo;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Archivo {
 	// Leer archivo csv y devolver registros
-	public static String[] leerArchivo(String nombre) {
-		ArrayList<String> lineas = new ArrayList<>();
-		try (Scanner scanner = new Scanner(new File(nombre))) {
-			scanner.useLocale(Locale.ENGLISH);
-			while (scanner.hasNextLine()) {
-				String linea = scanner.nextLine();
-				lineas.add(linea);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String[] arrayLineas = new String[lineas.size()];
-		arrayLineas = lineas.toArray(arrayLineas);
-		return arrayLineas;
-	}
+    public static String[] leerArchivo(String nombre) {
+        ArrayList<String> lineas = new ArrayList<>();
+        File archivo = new File(nombre);
+        
+        // Verificar si el archivo existe antes de intentar leerlo
+        if (!archivo.exists()) {
+            return new String[0]; // Retornar un array vacío
+        }
+
+        try (Scanner scanner = new Scanner(archivo)) {
+            scanner.useLocale(Locale.ENGLISH);
+            while (scanner.hasNextLine()) {
+                String linea = scanner.nextLine();
+                lineas.add(linea);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lineas.toArray(new String[0]);
+    }
 	
 	// Para encontrar la linea coincidente con "clave" en pos "n" en el archivo "nombre"
 	public static String[] buscarPorClaveYPosicion(String nombre, String clave, int n) {
@@ -44,13 +54,67 @@ public class Archivo {
 
 	// Método para insertar un registro al final de un archivo CSV
     public static void insertarRegistro(String nombre, String registro) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombre, true))) {
-            writer.newLine(); // Salto de línea para asegurarse de que el nuevo registro comience en una nueva línea
+        File archivo = new File(nombre);
+        boolean archivoVacio = archivo.length() == 0;
+    
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true))) {
+            if (!archivoVacio) {
+                writer.newLine(); // Salto de línea solo si el archivo no está vacío
+            }
             writer.write(registro); // Escribe el registro al final del archivo
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-	
-}
+    
+    public static void escribirListaEnCSV(String[] lineas, String nombreArchivo) {
+        try (FileWriter writer = new FileWriter(nombreArchivo)) {
 
+            // Escribir cada string en una nueva línea
+            for (String linea : lineas) {
+                writer.append(linea).append("\n");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void escribirStringEnCSV(String linea, String nombreArchivo, String clave, int posicion) {
+        List<String> lineas = new ArrayList<>();
+        boolean actualizado = false;
+
+        // Leer el archivo y buscar la clave
+        try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
+            String lineaArchivo;
+            while ((lineaArchivo = reader.readLine()) != null) {
+                String[] campos = lineaArchivo.split(",");
+                if (campos.length > posicion && campos[posicion].equals(clave)) {
+                    lineas.add(linea); // Reemplazar la línea existente con la nueva
+                    actualizado = true;
+                } else {
+                    lineas.add(lineaArchivo);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Si no se encontró la clave, agregar la nueva línea
+        if (!actualizado) {
+            lineas.add(linea);
+        }
+
+        // Escribir todas las líneas de nuevo al archivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
+            for (String l : lineas) {
+                writer.write(l);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+}
