@@ -80,7 +80,8 @@ public class Archivo {
         }
     }
 
-    public static void escribirStringEnCSV(String linea, String nombreArchivo, String clave, int posicion) {
+    // Para actualizar usuarios.csv
+    public static void escribirOActualizarStringEnCSV(String linea, String nombreArchivo, String clave, int posicion) {
         List<String> lineas = new ArrayList<>();
         boolean actualizado = false;
 

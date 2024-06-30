@@ -2,6 +2,7 @@ package criptomoneda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Mercado {
 	private String simbolo;
@@ -46,26 +47,37 @@ public class Mercado {
 		this.capacidad = capacidad;
 	}
 
-	public void actualizarPorCompra(double cant){
-		this.capacidad-=cant;
-		this.var7dias+=5;
-		this.volumen24Hs+=5;
+	public void actualizarPorCompra(double cant) {
+		this.capacidad -= cant;
+		this.var7dias += 5;
+		this.volumen24Hs += 5;
 	}
 
-	public void actualizarPorVenta(double cant){
-		this.capacidad+=cant;
-		this.var7dias-=7;
-		this.volumen24Hs-=7;
+	public void actualizarPorVenta(double cant) {
+		this.capacidad += cant;
+		this.var7dias -= 7;
+		this.volumen24Hs -= 7;
 	}
 
 	public static List<Mercado> trozearString(String[] lista) {
-		List<Mercado> listaCripto = new ArrayList<Mercado>();
+		List<Mercado> listaMercado = new ArrayList<>();
 		for (String str : lista) {
 			String[] partes = str.split(",");
-			listaCripto.add(new Mercado(partes[0], Double.parseDouble(partes[1]), Double.parseDouble(partes[2]),
-					Double.parseDouble(partes[3])));
+			String nombre = partes[0];
+			double valor1 = Double.parseDouble(partes[1]);
+
+			// Quitar el porcentaje del tercer elemento y convertirlo a double
+			double valor2 = Double.parseDouble(partes[2].replace("%", ""));
+
+			// Quitar el porcentaje y el signo del cuarto elemento y convertirlo a double
+			double valor3 = Double.parseDouble(partes[3].replace("%", "").replace("+", "").replace("-", ""));
+			if (partes[3].contains("-")) {
+				valor3 = -valor3;
+			}
+
+			listaMercado.add(new Mercado(nombre, valor1, valor2, valor3));
 		}
-		return listaCripto;
+		return listaMercado;
 	}
 
 	public static Mercado buscarSimboloEnLista(List<Mercado> listaMercado, String simbolo) {
@@ -82,8 +94,19 @@ public class Mercado {
 		int i = 0;
 
 		for (Mercado mercado : listaMercado) {
-			resultado[i++] = mercado.getSimbolo() + "," + mercado.getCapacidad() + "," +
-					mercado.getVolumen24Hs() + "," + mercado.getVar7dias();
+			// Formatear volumen24Hs con un % al final
+			String volumen24Hs = String.format(Locale.US, "%.2f%%", mercado.getVolumen24Hs());
+
+			// Formatear var7dias con el signo correspondiente y un % al final
+			String var7dias;
+			if (mercado.getVar7dias() >= 0) {
+				var7dias = String.format(Locale.US, "+%.2f%%", mercado.getVar7dias());
+			} else {
+				var7dias = String.format(Locale.US, "%.2f%%", mercado.getVar7dias());
+			}
+
+			// Construir el string final
+			resultado[i++] = mercado.getSimbolo() + "," + mercado.getCapacidad() + "," + volumen24Hs + "," + var7dias;
 		}
 
 		return resultado;

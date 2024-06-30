@@ -51,7 +51,7 @@ public class Usuario {
 	}
 
 	protected void actualizarUsuario(String usuario){
-		Archivo.escribirStringEnCSV(this.nombre+","+usuario, "casoDePrueba/usuarios.csv",this.nombre,0);
+		Archivo.escribirOActualizarStringEnCSV(this.nombre+","+usuario, "casoDePrueba/usuarios.csv",this.nombre,0);
 	}
 
 	protected void consultarCriptomoneda(Scanner scanner) {
